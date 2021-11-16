@@ -43,7 +43,7 @@ while True:
         ballSpeed = [random.randint(-5,5), random.randint(-5,5)]
         balllPos = [random.randint(0, width-100), random.randint(0, height-100)]
         ballSize = random.randint(10, 100)
-        balls += [Ball("Ball.png", ballSpeed, [ballSize, ballSize], balllPos)]
+        balls += [Ball(ballSpeed, [ballSize, ballSize], balllPos)]
         print(len(balls))
         for ball in balls:
             if balls [-1].collideBall(ball):
@@ -56,12 +56,13 @@ while True:
 
 
     for ball in balls:
-        ball.move()
-        ball.collideWall(size)
+        ball.update(size)
 
     for hitter in balls:
         for hittee in balls:
-            hitter.collideBall(hittee)
+            if hitter.collideBall(hittee):
+                if hitter.kind == "player":
+                    balls.remove(hittee)
 
     screen.fill([0,0,0])
     for ball in balls:

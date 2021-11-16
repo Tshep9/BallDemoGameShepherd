@@ -1,9 +1,22 @@
 import pygame, sys, math
 
 class Ball():
-    def __init__(self, image, speed, size, pos=[0,0]):
-        self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image, size)
+    def __init__(self, speed, size, pos=[0,0]):
+        self.images = [pygame.transform.scale(pygame.image.load("Ball1.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball2.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball3.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball4.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball5.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball6.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball7.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball6.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball5.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball4.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball3.png"), size),
+                       pygame.transform.scale(pygame.image.load("Ball2.png"), size)]
+        self.frame = 0
+        self.frameMax = len(self.images)-1
+        self.image = self.images[self.frame]
         self.rect = self.image.get_rect(topleft = pos)
         self.radius = (self.rect.width + self.rect.height) / 4
         self.speed = self.speedx, self.speedy = speed
@@ -11,11 +24,37 @@ class Ball():
         self.didBounceX = False
         self.didBounceY = False
 
-    def move(self):
+        self.kind = "ball"
+        self.animationTimer = 0
+        self.animationTimerMax = 60/10
+
+    def update(self, size):
+        self.move()
+
         self.didBounceX = False
         self.didBounceY = False
+
+        self.collideWall(size)
+
+        self.animationTimer += 1
+        self.animate()
+
+
+    def move(self):
         self.speed = [self.speedx, self.speedy]
         self.rect = self.rect.move(self.speed)
+
+
+    def animate(self):
+        if self.animationTimer >= self.animationTimerMax:
+            self.animationTimer = 0
+            if self.frame >= self.frameMax:
+                self.frame = 0
+            else:
+                self.frame += 1
+            self.image = self.images[self.frame]
+
+
 
     def collideWall(self, size):
         width = size[0]

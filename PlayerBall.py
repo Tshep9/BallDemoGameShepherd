@@ -2,24 +2,39 @@ import pygame, sys, math
 from Ball import*
 class PlayerBall(Ball):
     def __init__(self, maxSpeed=4, startPos=[0,0]):
-        Ball.__init__(self,"player.png", [0,0], [100,100], startPos)
+        Ball.__init__(self, [0,0], [100,100], startPos)
+        self.imagesUp = [pygame.image.load("player_up.png")]
+        self.imagesDown = [pygame.image.load("player_down.png")]
+        self.imagesLeft = [pygame.image.load("player_left.png")]
+        self.imagesRight = [pygame.image.load("player_right.png")]
         self.maxSpeed = maxSpeed
+        self.images = self.imagesUp
+        self.frame = 0
+        self.frameMax = len(self.images) - 1
+        self.image = self.images[self.frame]
+        self.rect = self.image.get_rect(topleft=startPos)
+        self.kind = ###FINISH HERE ON VIDEO 20
+
 
     def goKey(self, direction):
         if direction == "left":
             self.speedx = -self.maxSpeed
+            self.images = self.imagesLeft
         elif direction == "right":
             self.speedx = self.maxSpeed
-        elif direction == "up":
+            self.images = self.imagesRight
+        if direction == "up":
             self.speedy = -self.maxSpeed
+            self.images = self.imagesUp
         elif direction == "down":
             self.speedy = self.maxSpeed
+            self.images = self.imagesDown
 
-        elif direction == "sleft":
+        if direction == "sleft":
             self.speedx = 0
         elif direction == "sright":
             self.speedx = 0
-        elif direction == "sup":
+        if direction == "sup":
             self.speedy = 0
         elif direction == "sdown":
             self.speedy = 0
@@ -50,15 +65,5 @@ class PlayerBall(Ball):
                     if self.rect.bottom > other.rect.top:
                         if self.rect.top < other.rect.bottom:
                             if self.dist(other) < self.radius + other.radius:
-                                if not self.didBounceX:
-                                    self.speedx = -self.speedx
-                                    self.move()
-                                    self.speedx = 0
-                                    self.didBounceX = True
-                                if not self.didBounceY:
-                                    self.speedy = -self.speedy
-                                    self.move()
-                                    self.speedy = 0
-                                    self.didBounceY = True
                                 return True
         return False
