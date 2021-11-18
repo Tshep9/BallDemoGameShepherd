@@ -2,13 +2,19 @@ import random
 import pygame, sys, math
 from Ball import *
 from PlayerBall import *
+from HUD import *
 pygame.init()
+if not pygame.font:
+    print("Warning, fonts disabled")
 
 clock = pygame.time.Clock()
 size = width, height = 900, 700
 screen = pygame.display.set_mode(size)
 player = PlayerBall(4, [900/2-50, 700/2-50])
 balls = [player]
+hud = HUD([0,0])
+kills = 0;
+
 
 spawnTimer = 0
 spawnTimerMax = 60*1;
@@ -58,15 +64,20 @@ while True:
     for ball in balls:
         ball.update(size)
 
+    hud.update(kills)
+
     for hitter in balls:
         for hittee in balls:
             if hitter.collideBall(hittee):
                 if hitter.kind == "player":
+                    kills += 10-hittee.radius/10
                     balls.remove(hittee)
+                    print(kills)
 
     screen.fill([0,0,0])
     for ball in balls:
         screen.blit(ball.image, ball.rect)
     screen.blit(player.image, player.rect)
+    screen.blit(hud.image, hud.rect)
     pygame.display.flip()
     clock.tick(60)

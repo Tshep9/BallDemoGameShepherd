@@ -2,18 +2,18 @@ import pygame, sys, math
 
 class Ball():
     def __init__(self, speed, size, pos=[0,0]):
-        self.images = [pygame.transform.scale(pygame.image.load("Ball1.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball2.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball3.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball4.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball5.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball6.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball7.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball6.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball5.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball4.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball3.png"), size),
-                       pygame.transform.scale(pygame.image.load("Ball2.png"), size)]
+        self.images = [pygame.transform.scale(pygame.image.load("Images/Ball/Ball1.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball2.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball3.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball4.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball5.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball6.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball7.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball6.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball5.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball4.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball3.png"), size),
+                       pygame.transform.scale(pygame.image.load("Images/Ball/Ball2.png"), size)]
         self.frame = 0
         self.frameMax = len(self.images)-1
         self.image = self.images[self.frame]
@@ -27,6 +27,7 @@ class Ball():
         self.kind = "ball"
         self.animationTimer = 0
         self.animationTimerMax = 60/10
+
 
     def update(self, size):
         self.move()

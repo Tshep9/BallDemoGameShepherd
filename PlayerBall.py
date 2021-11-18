@@ -3,17 +3,18 @@ from Ball import*
 class PlayerBall(Ball):
     def __init__(self, maxSpeed=4, startPos=[0,0]):
         Ball.__init__(self, [0,0], [100,100], startPos)
-        self.imagesUp = [pygame.image.load("player_up.png")]
-        self.imagesDown = [pygame.image.load("player_down.png")]
-        self.imagesLeft = [pygame.image.load("player_left.png")]
-        self.imagesRight = [pygame.image.load("player_right.png")]
+        self.imagesUp = [pygame.image.load("Images/Player Ball/player_up.png")]
+        self.imagesDown = [pygame.image.load("Images/Player Ball/player_down.png")]
+        self.imagesLeft = [pygame.image.load("Images/Player Ball/player_left.png")]
+        self.imagesRight = [pygame.image.load("Images/Player Ball/player_right.png")]
         self.maxSpeed = maxSpeed
         self.images = self.imagesUp
         self.frame = 0
         self.frameMax = len(self.images) - 1
         self.image = self.images[self.frame]
         self.rect = self.image.get_rect(topleft=startPos)
-        self.kind = ###FINISH HERE ON VIDEO 20
+        self.radius = (self.rect.width/2 + self.rect.height/2) / 2
+        self.kind = "player"
 
 
     def goKey(self, direction):
