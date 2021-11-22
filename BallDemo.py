@@ -1,8 +1,11 @@
 import random
 import pygame, sys, math
 from Ball import *
+from LevelLoader import*
+"""
 from PlayerBall import *
 from HUD import *
+from Wall import *
 pygame.init()
 if not pygame.font:
     print("Warning, fonts disabled")
@@ -17,6 +20,8 @@ timer = HUD("Time: ", size, [900-100,0])
 
 kills = 0
 time = 0
+
+walls = loadLevel("Levels/level.lvl")
 
 
 spawnTimer = 0
@@ -55,7 +60,6 @@ while True:
         balllPos = [random.randint(0, width-100), random.randint(0, height-100)]
         ballSize = random.randint(10, 100)
         balls += [Ball(ballSpeed, [ballSize, ballSize], balllPos)]
-        print(len(balls))
         for ball in balls:
             if balls [-1].collideBall(ball):
                 balls.remove(balls[-1])
@@ -74,13 +78,18 @@ while True:
                 if hitter.kind == "player":
                     kills += 10-hittee.radius/10
                     balls.remove(hittee)
-                    print(kills)
+        for wall in walls:
+            hitter.collideWallTile(wall)
+
 
     screen.fill([0,0,0])
     for ball in balls:
         screen.blit(ball.image, ball.rect)
+    for wall in walls:
+        screen.blit(wall.image, wall.rect)
     screen.blit(player.image, player.rect)
     screen.blit(score.image, score.rect)
     screen.blit(timer.image, timer.rect)
     pygame.display.flip()
     clock.tick(60)
+"""

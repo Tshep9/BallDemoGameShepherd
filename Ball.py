@@ -85,6 +85,20 @@ class Ball():
                                 return True
         return False
 
+    def collideWallTile(self, other):
+        if self.rect.right > other.rect.left:
+            if self.rect.left < other.rect.right:
+                if self.rect.bottom > other.rect.top:
+                    if self.rect.top < other.rect.bottom:
+                        if not self.didBounceX:
+                            self.speedx = -self.speedx
+                            self.didBounceX = True
+                        if not self.didBounceY:
+                            self.speedy = -self.speedy
+                            self.didBounceY = True
+                        return True
+        return False
+
     def dist(self, other):
         x1 = self.rect.center[0]
         y1 = self.rect.center[1]
