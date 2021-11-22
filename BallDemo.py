@@ -12,8 +12,11 @@ size = width, height = 900, 700
 screen = pygame.display.set_mode(size)
 player = PlayerBall(4, [900/2-50, 700/2-50])
 balls = [player]
-hud = HUD([0,0])
-kills = 0;
+score = HUD("Score: ", size,  [0,0])
+timer = HUD("Time: ", size, [900-100,0])
+
+kills = 0
+time = 0
 
 
 spawnTimer = 0
@@ -43,9 +46,11 @@ while True:
                 player.goKey("sdown")
 
 
+    time += 1
     spawnTimer += 1
+
     if spawnTimer >= spawnTimerMax:
-        spawnTimer = 0;
+        spawnTimer = 0
         ballSpeed = [random.randint(-5,5), random.randint(-5,5)]
         balllPos = [random.randint(0, width-100), random.randint(0, height-100)]
         ballSize = random.randint(10, 100)
@@ -57,14 +62,11 @@ while True:
                 break
 
 
-
-
-
-
     for ball in balls:
         ball.update(size)
 
-    hud.update(kills)
+    timer.update(int(time/60))
+    score.update(kills)
 
     for hitter in balls:
         for hittee in balls:
@@ -78,6 +80,7 @@ while True:
     for ball in balls:
         screen.blit(ball.image, ball.rect)
     screen.blit(player.image, player.rect)
-    screen.blit(hud.image, hud.rect)
+    screen.blit(score.image, score.rect)
+    screen.blit(timer.image, timer.rect)
     pygame.display.flip()
     clock.tick(60)
