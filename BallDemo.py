@@ -2,7 +2,7 @@ import random
 import pygame, sys, math
 from Ball import *
 from LevelLoader import*
-"""
+
 from PlayerBall import *
 from HUD import *
 from Wall import *
@@ -21,8 +21,9 @@ timer = HUD("Time: ", size, [900-100,0])
 kills = 0
 time = 0
 
-walls = loadLevel("Levels/level.lvl")
-
+tiles = loadLevel("Levels/level.lvl")
+walls = tiles[0]
+spawners = tiles[1]
 
 spawnTimer = 0
 spawnTimerMax = 60*1;
@@ -83,6 +84,8 @@ while True:
 
 
     screen.fill([0,0,0])
+    for spawner in spawners:
+        screen.blit(spawner.image, spawner.rect)
     for ball in balls:
         screen.blit(ball.image, ball.rect)
     for wall in walls:
@@ -92,4 +95,3 @@ while True:
     screen.blit(timer.image, timer.rect)
     pygame.display.flip()
     clock.tick(60)
-"""
