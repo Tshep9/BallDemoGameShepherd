@@ -5,16 +5,16 @@ from Ball import*
 
 
 
-class Spawner():
+class Shoot():
     def __init__(self, pos=[25, 25]):
-        self.image = pygame.image.load("Images/Tiles/spawner.png")
+        self.image = pygame.image.load("Images/Player Ball/player_shoot.png")
         self.rect = self.image.get_rect(center=pos)
-        self.kind = "spawner"
+        self.kind = "shot"
 
     def update(self, size):
         pass
 
-    def spawnBall(self):
+    def spawnShot(self):
         speed = [random.randint(-5, 5), random.randint(-5, 5)]
         size = random.randint(10, 100)
         pos = [self.rect.center]

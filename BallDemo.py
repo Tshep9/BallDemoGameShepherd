@@ -2,10 +2,11 @@ import random
 import pygame, sys, math
 from Ball import *
 from LevelLoader import*
-
 from PlayerBall import *
 from HUD import *
 from Wall import *
+from Spawner import*
+from Projectile import*
 pygame.init()
 if not pygame.font:
     print("Warning, fonts disabled")
@@ -15,6 +16,7 @@ size = width, height = 900, 700
 screen = pygame.display.set_mode(size)
 player = PlayerBall(4, [900/2-50, 700/2-50])
 balls = [player]
+shots = []
 score = HUD("Score: ", size,  [0,0])
 timer = HUD("Time: ", size, [900-100,0])
 
@@ -41,6 +43,9 @@ while True:
                 player.goKey("up")
             elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
                 player.goKey("down")
+            elif event.key == pygame.K_f or event.key == pygame.K_SPACE:
+                player.goKey("down")
+
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 player.goKey("sleft")
@@ -57,10 +62,10 @@ while True:
 
     if spawnTimer >= spawnTimerMax:
         spawnTimer = 0
-        ballSpeed = [random.randint(-5,5), random.randint(-5,5)]
-        balllPos = [random.randint(0, width-100), random.randint(0, height-100)]
-        ballSize = random.randint(10, 100)
-        balls += [Ball(ballSpeed, [ballSize, ballSize], balllPos)]
+        spawner = spawners[random.randint(0, len(spawners)-1)]
+        shot = player.pos
+        balls += [spawner.spawnBall()]
+        shots += [shot.spawnShot()]
         for ball in balls:
             if balls [-1].collideBall(ball):
                 balls.remove(balls[-1])

@@ -31,6 +31,7 @@ class PlayerBall(Ball):
             self.speedy = self.maxSpeed
             self.images = self.imagesDown
 
+
         if direction == "sleft":
             self.speedx = 0
         elif direction == "sright":
