@@ -1,4 +1,5 @@
 import pygame, sys, math
+from LevelLoader import *
 
 
 class Spawner():
@@ -9,3 +10,5 @@ class Spawner():
 
     def update(self, size):
         pass
+
+        
