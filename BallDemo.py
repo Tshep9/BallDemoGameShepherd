@@ -22,7 +22,7 @@ timer = HUD("Time: ", size, [900-100,0])
 
 kills = 0
 time = 0
-##
+
 tiles = loadLevel("Levels/level.lvl")
 walls = tiles[0]
 spawners = tiles[1]
