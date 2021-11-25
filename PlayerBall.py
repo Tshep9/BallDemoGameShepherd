@@ -1,5 +1,7 @@
 import pygame, sys, math
+import random
 from Ball import*
+from Projectile import *
 class PlayerBall(Ball):
     def __init__(self, maxSpeed=4, startPos=[0,0]):
         Ball.__init__(self, [0,0], [100,100], startPos)
@@ -32,6 +34,7 @@ class PlayerBall(Ball):
             self.images = self.imagesDown
 
 
+
         if direction == "sleft":
             self.speedx = 0
         elif direction == "sright":
@@ -41,8 +44,16 @@ class PlayerBall(Ball):
         elif direction == "sdown":
             self.speedy = 0
 
+
         self.speed = [self.speedx, self.speedy]
         print(self.maxSpeed, direction, self.speed)
+
+    def spawnShot(self):
+        speed = [random.randint(-5, 5), random.randint(-5, 5)]
+        size = 25
+        pos = [self.rect.topleft]
+
+        return Ball(speed, [size, size], self.rect.center)
 
     def collideWall(self, size):
         width = size[0]

@@ -44,7 +44,8 @@ while True:
             elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
                 player.goKey("down")
             elif event.key == pygame.K_f or event.key == pygame.K_SPACE:
-                player.goKey("down")
+                print("shoot")
+                shots += [player.spawnShot()]
 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -63,9 +64,7 @@ while True:
     if spawnTimer >= spawnTimerMax:
         spawnTimer = 0
         spawner = spawners[random.randint(0, len(spawners)-1)]
-        shot = player.pos
         balls += [spawner.spawnBall()]
-        shots += [shot.spawnShot()]
         for ball in balls:
             if balls [-1].collideBall(ball):
                 balls.remove(balls[-1])
@@ -81,7 +80,7 @@ while True:
     for hitter in balls:
         for hittee in balls:
             if hitter.collideBall(hittee):
-                if hitter.kind == "player":
+                if hitter.kind == "player" or hitter.kind == "shot":
                     kills += 10-hittee.radius/10
                     balls.remove(hittee)
         for wall in walls:
@@ -93,6 +92,8 @@ while True:
         screen.blit(spawner.image, spawner.rect)
     for ball in balls:
         screen.blit(ball.image, ball.rect)
+    for shot in shots:
+        screen.blit(shot.image, shot.rect)
     for wall in walls:
         screen.blit(wall.image, wall.rect)
     screen.blit(player.image, player.rect)

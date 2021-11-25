@@ -1,25 +1,81 @@
-import random
 import pygame, sys, math
-from LevelLoader import *
-from Ball import*
 
+class Projectile():
+    def __init__(self, speed, size, pos=[0,0]):
 
+        self.image = "Images/Player Ball/player_shoot.png"
+        self.radius = (self.rect.width + self.rect.height) / 4
+        self.speed = self.speedx, self.speedy = speed
 
-class Shoot():
-    def __init__(self, pos=[25, 25]):
-        self.image = pygame.image.load("Images/Player Ball/player_shoot.png")
-        self.rect = self.image.get_rect(center=pos)
+        self.didBounceX = False
+        self.didBounceY = False
+
         self.kind = "shot"
 
+
+
     def update(self, size):
-        pass
+        self.move()
 
-    def spawnShot(self):
-        speed = [random.randint(-5, 5), random.randint(-5, 5)]
-        size = random.randint(10, 100)
-        pos = [self.rect.center]
+        self.didBounceX = False
+        self.didBounceY = False
 
-        while speed == [0,0]:
-            speed = [random.randint(-5,5), random.randint(-5,5)]
+        self.collideWall(size)
 
-        return Ball(speed, [size, size], self.rect.center)
+
+
+
+    def move(self):
+        self.speed = [self.speedx, self.speedy]
+        self.rect = self.rect.move(self.speed)
+
+
+    def collideWall(self, size):
+        width = size[0]
+        height = size[1]
+        if not self.didBounceX:
+            if self.rect.right > width or self.rect.left < 0:
+                self.speedx = -self.speedx
+                self.didBounceX = True
+        if not self.didBounceY:
+            if self.rect.bottom > height or self.rect.top < 0:
+                self.speedy = -self.speedy
+                self.didBounceY = True
+
+    def collideBall(self, other):
+        if self != other:
+            if self.rect.right > other.rect.left:
+                if self.rect.left < other.rect.right:
+                    if self.rect.bottom > other.rect.top:
+                        if self.rect.top < other.rect.bottom:
+                            if self.dist(other) < self.radius + other.radius:
+                                if not self.didBounceX:
+                                    self.speedx = -self.speedx
+                                    self.didBounceX = True
+                                if not self.didBounceY:
+                                    self.speedy = -self.speedy
+                                    self.didBounceY = True
+                                return True
+        return False
+
+    def collideWallTile(self, other):
+        if self.rect.right > other.rect.left:
+            if self.rect.left < other.rect.right:
+                if self.rect.bottom > other.rect.top:
+                    if self.rect.top < other.rect.bottom:
+                        if not self.didBounceX:
+                            self.speedx = -self.speedx
+                            self.didBounceX = True
+                        if not self.didBounceY:
+                            self.speedy = -self.speedy
+                            self.didBounceY = True
+                        return True
+        return False
+
+    def dist(self, other):
+        x1 = self.rect.center[0]
+        y1 = self.rect.center[1]
+        x2 = other.rect.center[0]
+        y2 = other.rect.center[1]
+
+        return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
