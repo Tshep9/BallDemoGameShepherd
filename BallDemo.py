@@ -45,7 +45,7 @@ while True:
                 player.goKey("down")
             elif event.key == pygame.K_f or event.key == pygame.K_SPACE:
                 print("shoot")
-                shots += [player.spawnShot()]
+                balls += [player.spawnShot()]
 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -71,6 +71,7 @@ while True:
                 break
 
 
+
     for ball in balls:
         ball.update(size)
 
@@ -81,10 +82,19 @@ while True:
         for hittee in balls:
             if hitter.collideBall(hittee):
                 if hitter.kind == "player" or hitter.kind == "shot":
-                    kills += 10-hittee.radius/10
-                    balls.remove(hittee)
+                    if hittee.kind != "shot":
+                        kills += 10-hittee.radius/10
+                        balls.remove(hittee)
+                    elif hittee.kind == "shot":
+                        pass
+
+
         for wall in walls:
             hitter.collideWallTile(wall)
+
+
+
+
 
 
     screen.fill([0,0,0])
@@ -92,10 +102,9 @@ while True:
         screen.blit(spawner.image, spawner.rect)
     for ball in balls:
         screen.blit(ball.image, ball.rect)
-    for shot in shots:
-        screen.blit(shot.image, shot.rect)
     for wall in walls:
         screen.blit(wall.image, wall.rect)
+
     screen.blit(player.image, player.rect)
     screen.blit(score.image, score.rect)
     screen.blit(timer.image, timer.rect)

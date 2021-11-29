@@ -53,7 +53,7 @@ class PlayerBall(Ball):
         size = 25
         pos = [self.rect.topleft]
 
-        return Ball(speed, [size, size], self.rect.center)
+        return Projectile(speed, [size, size], self.rect.center)
 
     def collideWall(self, size):
         width = size[0]
@@ -72,7 +72,7 @@ class PlayerBall(Ball):
                 self.didBounceY = True
 
     def collideBall(self, other):
-        if self != other:
+        if self != other and other.kind != "shot":
             if self.rect.right > other.rect.left:
                 if self.rect.left < other.rect.right:
                     if self.rect.bottom > other.rect.top:

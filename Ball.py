@@ -69,6 +69,21 @@ class Ball():
                 self.speedy = -self.speedy
                 self.didBounceY = True
 
+    def collideShot(self, other):
+        if self != other:
+            if self.rect.right > other.rect.left:
+                if self.rect.left < other.rect.right:
+                    if self.rect.bottom > other.rect.top:
+                        if self.rect.top < other.rect.bottom:
+                            if self.dist(other) < self.radius + other.radius:
+                                if not self.didBounceX:
+                                    self.speedx = -self.speedx
+                                    self.didBounceX = True
+                                if not self.didBounceY:
+                                    self.speedy = -self.speedy
+                                    self.didBounceY = True
+                                return True
+
     def collideBall(self, other):
         if self != other:
             if self.rect.right > other.rect.left:

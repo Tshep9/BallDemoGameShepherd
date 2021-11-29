@@ -1,9 +1,10 @@
 import pygame, sys, math
 
 class Projectile():
-    def __init__(self, speed, size, pos=[0,0]):
+    def __init__(self, speed, size =[25, 25], pos=[0,0]):
 
-        self.image = "Images/Player Ball/player_shoot.png"
+        self.image = pygame.image.load("Images/Player Ball/player_shoot.png")
+        self.rect = self.image.get_rect(center = pos)
         self.radius = (self.rect.width + self.rect.height) / 4
         self.speed = self.speedx, self.speedy = speed
 
@@ -11,6 +12,7 @@ class Projectile():
         self.didBounceY = False
 
         self.kind = "shot"
+
 
 
 
@@ -43,7 +45,7 @@ class Projectile():
                 self.didBounceY = True
 
     def collideBall(self, other):
-        if self != other:
+        if self != other and other.kind != "player":
             if self.rect.right > other.rect.left:
                 if self.rect.left < other.rect.right:
                     if self.rect.bottom > other.rect.top:
