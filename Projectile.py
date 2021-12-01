@@ -14,7 +14,9 @@ class Projectile():
         self.kind = "shot"
         self.living = True
 
-
+        #Pew Pew by DKnight556, https://soundbible.com/1949-Pew-Pew.html
+        self.sound = pygame.mixer.Sound("Sounds/Pew.ogg")
+        self.sound.play()
 
 
     def update(self, size):

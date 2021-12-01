@@ -20,12 +20,17 @@ shots = []
 score = HUD("Score: ", size,  [0,0])
 timer = HUD("Time: ", size, [900-100,0])
 
-kills = 0
+kills = 10
 time = 0
 
 tiles = loadLevel("Levels/level.lvl")
 walls = tiles[0]
 spawners = tiles[1]
+
+#Backgroundmusic.ogg by David Renda URL: https://www.fesliyanstudios.com/royalty-free-music/downloads-c/8-bit-music/6
+pygame.mixer.music.load("Sounds/Background.ogg")
+pygame.mixer.music.play(-1, 0.0)
+
 
 spawnTimer = 0
 spawnTimerMax = 60*1;
@@ -44,8 +49,8 @@ while True:
             elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
                 player.goKey("down")
             elif event.key == pygame.K_f or event.key == pygame.K_SPACE:
-                print("shoot")
                 balls += [player.spawnShot()]
+                kills += -1
 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -81,12 +86,15 @@ while True:
     for hitter in balls:
         for hittee in balls:
             if hitter.collideBall(hittee):
-                if hitter.kind == "player" or hitter.kind == "shot":
+                if hitter.kind == "shot":
                     if hittee.kind != "shot":
                         kills += 10-hittee.radius/10
                         hittee.kill()
-                    elif hittee.kind == "shot":
-                        pass
+                elif hitter.kind == "player":
+                    kills += -5
+                    hittee.kill()
+                    sound = pygame.mixer.Sound("Sounds/hit.ogg")
+                    sound.play()
 
 
         for wall in walls:
