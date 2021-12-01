@@ -17,21 +17,26 @@ class PlayerBall(Ball):
         self.rect = self.image.get_rect(topleft=startPos)
         self.radius = (self.rect.width/2 + self.rect.height/2) / 2
         self.kind = "player"
+        self.direction = "up"
 
 
     def goKey(self, direction):
         if direction == "left":
             self.speedx = -self.maxSpeed
             self.images = self.imagesLeft
+            self.direction = "left"
         elif direction == "right":
             self.speedx = self.maxSpeed
             self.images = self.imagesRight
+            self.direction = "right"
         if direction == "up":
             self.speedy = -self.maxSpeed
             self.images = self.imagesUp
+            self.direction = "up"
         elif direction == "down":
             self.speedy = self.maxSpeed
             self.images = self.imagesDown
+            self.direction = "down"
 
 
 
@@ -49,7 +54,15 @@ class PlayerBall(Ball):
         print(self.maxSpeed, direction, self.speed)
 
     def spawnShot(self):
-        speed = [random.randint(-5, 5), random.randint(-5, 5)]
+        if self.direction == "left":
+            speed = [-10, 0]
+        elif self.direction == "right":
+            speed = [10 , 0]
+        if self.direction == "up":
+            speed = [0, -10]
+        elif self.direction == "down":
+            speed = [0, 10]
+
         size = 25
         pos = [self.rect.topleft]
 

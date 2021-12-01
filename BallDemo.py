@@ -84,7 +84,7 @@ while True:
                 if hitter.kind == "player" or hitter.kind == "shot":
                     if hittee.kind != "shot":
                         kills += 10-hittee.radius/10
-                        balls.remove(hittee)
+                        hittee.kill()
                     elif hittee.kind == "shot":
                         pass
 
@@ -101,6 +101,8 @@ while True:
     for spawner in spawners:
         screen.blit(spawner.image, spawner.rect)
     for ball in balls:
+        if not ball.living:
+            balls.remove(ball)
         screen.blit(ball.image, ball.rect)
     for wall in walls:
         screen.blit(wall.image, wall.rect)

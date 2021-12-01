@@ -3,7 +3,7 @@ import pygame, sys, math
 class Projectile():
     def __init__(self, speed, size =[25, 25], pos=[0,0]):
 
-        self.image = pygame.image.load("Images/Player Ball/player_shoot.png")
+        self.image = pygame.transform.scale(pygame.image.load("Images/Player Ball/player_shoot.png"), size)
         self.rect = self.image.get_rect(center = pos)
         self.radius = (self.rect.width + self.rect.height) / 4
         self.speed = self.speedx, self.speedy = speed
@@ -12,6 +12,7 @@ class Projectile():
         self.didBounceY = False
 
         self.kind = "shot"
+        self.living = True
 
 
 
@@ -35,14 +36,10 @@ class Projectile():
     def collideWall(self, size):
         width = size[0]
         height = size[1]
-        if not self.didBounceX:
-            if self.rect.right > width or self.rect.left < 0:
-                self.speedx = -self.speedx
-                self.didBounceX = True
-        if not self.didBounceY:
-            if self.rect.bottom > height or self.rect.top < 0:
-                self.speedy = -self.speedy
-                self.didBounceY = True
+        if self.rect.right > width or self.rect.left < 0:
+            self.living = False
+        if self.rect.bottom > height or self.rect.top < 0:
+            self.living = False
 
     def collideBall(self, other):
         if self != other and other.kind != "player":
@@ -51,12 +48,8 @@ class Projectile():
                     if self.rect.bottom > other.rect.top:
                         if self.rect.top < other.rect.bottom:
                             if self.dist(other) < self.radius + other.radius:
-                                if not self.didBounceX:
-                                    self.speedx = -self.speedx
-                                    self.didBounceX = True
-                                if not self.didBounceY:
-                                    self.speedy = -self.speedy
-                                    self.didBounceY = True
+                                self.living = False
+
                                 return True
         return False
 
@@ -65,12 +58,7 @@ class Projectile():
             if self.rect.left < other.rect.right:
                 if self.rect.bottom > other.rect.top:
                     if self.rect.top < other.rect.bottom:
-                        if not self.didBounceX:
-                            self.speedx = -self.speedx
-                            self.didBounceX = True
-                        if not self.didBounceY:
-                            self.speedy = -self.speedy
-                            self.didBounceY = True
+                        self.living = False
                         return True
         return False
 

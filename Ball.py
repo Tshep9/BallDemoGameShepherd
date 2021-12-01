@@ -25,6 +25,7 @@ class Ball():
         self.didBounceY = False
 
         self.kind = "ball"
+        self.living = True
         self.animationTimer = 0
         self.animationTimerMax = 60/10
 
@@ -113,6 +114,9 @@ class Ball():
                             self.didBounceY = True
                         return True
         return False
+
+    def kill(self):
+        self.living = False
 
     def dist(self, other):
         x1 = self.rect.center[0]
