@@ -33,7 +33,7 @@ pygame.mixer.music.play(-1, 0.0)
 
 
 spawnTimer = 0
-spawnTimerMax = 60*1;
+spawnTimerMax = 60*1
 
 while True:
     for event in pygame.event.get():

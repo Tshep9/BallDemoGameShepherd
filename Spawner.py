@@ -16,7 +16,7 @@ class Spawner():
 
     def spawnBall(self):
         speed = [random.randint(-5, 5), random.randint(-5, 5)]
-        size = random.randint(10, 100)
+        size = random.randint(10, 75)
         pos = [self.rect.center]
 
         while speed == [0,0]:
